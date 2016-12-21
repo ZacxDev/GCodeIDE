@@ -14,16 +14,11 @@ public abstract class Sprite {
 	public Sprite(int x, int y) {
 		this.x = x;
 		this.y = y;
-		width = Core.basew * 64;
-		height = Core.baseh * 75;
 		
 		sprites.add(this);
 	}
 	
-	public void validate() {
-		width = Core.basew * 64;
-		height = Core.baseh * 75;
-	}
+	public abstract void validate();
 	
 	public static void validateAll() {
 		for (int i = 0; i < sprites.size(); i++) {

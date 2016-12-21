@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.Zacx.GC.Main.Core;
+
 public class CodePane extends Sprite {
 	
 	public static List<CodePane> codepanes = new ArrayList<CodePane>();
@@ -12,7 +14,15 @@ public class CodePane extends Sprite {
 	public CodePane(int x, int y) {
 		super(x, y);
 		
+		width = Core.basew * 64;
+		height = Core.baseh * 75;
+		
 		codepanes.add(this);
+	}
+	
+	public void validate() {
+		width = Core.basew * 64;
+		height = Core.baseh * 75;
 	}
 	
 	public void tick() {}
