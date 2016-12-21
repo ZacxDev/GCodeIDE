@@ -39,7 +39,10 @@ public class CodePane extends KeyInputSprite {
 		}
 		
 		g.setColor(Color.green);
-		g.fillRect(x + li * 9, y + bi*10, 3, 15);
+		System.out.println(li);
+		String text = body.get(bi).substring(li);
+		int tw = g.getFontMetrics().stringWidth(text);
+		g.fillRect(x + tw, y + bi*10, 3, 15);
 	}
 	
 }
