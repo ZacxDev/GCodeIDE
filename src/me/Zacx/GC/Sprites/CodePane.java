@@ -7,7 +7,7 @@ import java.util.List;
 
 import me.Zacx.GC.Main.Core;
 
-public class CodePane extends Sprite {
+public class CodePane extends KeyInputSprite {
 	
 	public static List<CodePane> codepanes = new ArrayList<CodePane>();
 	
@@ -31,6 +31,15 @@ public class CodePane extends Sprite {
 		g.setColor(Color.gray);
 		g.fillRect(x, y, width, height);
 		
+		g.setColor(Color.white);
+		int iy = 10;
+		for (int i = 0; i < body.size(); i++) {
+			g.drawString(body.get(i), x, y + iy);
+			iy += 10;
+		}
+		
+		g.setColor(Color.green);
+		g.fillRect(x + li * 9, y + bi*10, 3, 15);
 	}
 	
 }

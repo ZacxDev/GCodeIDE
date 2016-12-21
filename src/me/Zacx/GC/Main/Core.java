@@ -13,13 +13,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Random;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 import me.Zacx.GC.Frame.Window;
+import me.Zacx.GC.Input.KeyHandle;
 import me.Zacx.GC.Sprites.CodePane;
+import me.Zacx.GC.Sprites.KeyInputSprite;
 import me.Zacx.GC.Sprites.Sprite;
 
 public class Core extends Canvas implements Runnable {
@@ -35,6 +36,8 @@ public class Core extends Canvas implements Runnable {
 	public static int basew = WIDTH / 100, baseh = HEIGHT / 100;
 
 	private Random r;
+	private KeyHandle keyHandle;
+	private KeyInputSprite currentKeySprite;
 
 	public File pfFolder = new File(System.getenv("ProgramFiles")
 			+ "/GCodeIDE/");
@@ -88,10 +91,12 @@ public class Core extends Canvas implements Runnable {
 		}
 
 		new Access(this);
+		keyHandle = Access.keyHandle;
 		r = new Random();
-		new CodePane(50, 50);
+		currentKeySprite = new CodePane(50, 50);
 
 		window = new Window(WIDTH, HEIGHT, "Game", this);
+		this.addKeyListener(keyHandle);
 		this.requestFocus();
 
 	}
@@ -149,9 +154,14 @@ public class Core extends Canvas implements Runnable {
 
 	}
 
+	private long ufto = 60L;
 	private void tick() {
-		updateFrame();
+		ufto--;
 		
+		if (ufto <= 0){
+			updateFrame();
+			ufto = 60L;
+		}
 	}
 
 	private void render() {
@@ -188,6 +198,8 @@ public class Core extends Canvas implements Runnable {
 		HEIGHT = window.getHeight();
 		basew = WIDTH / 100;
 		baseh = HEIGHT / 100;
+		
+		Sprite.validateAll();
 	}
 
 	public static void main(String[] args) {
@@ -328,5 +340,9 @@ public class Core extends Canvas implements Runnable {
 
 	public void reset() {
 	
+	}
+	
+	public KeyInputSprite getCurrentKeySprite() {
+		return currentKeySprite;
 	}
 }
