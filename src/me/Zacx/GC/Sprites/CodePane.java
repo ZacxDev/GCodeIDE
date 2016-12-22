@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.Zacx.GC.Input.Fonts;
 import me.Zacx.GC.Main.Core;
 
 public class CodePane extends KeyInputSprite {
@@ -28,6 +29,7 @@ public class CodePane extends KeyInputSprite {
 	public void tick() {}
 	
 	public void render(Graphics g) {
+		g.setFont(Fonts.small.fnt);
 		g.setColor(Color.gray);
 		g.fillRect(x, y, width, height);
 		
@@ -39,8 +41,7 @@ public class CodePane extends KeyInputSprite {
 		}
 		
 		g.setColor(Color.green);
-		System.out.println(li);
-		String text = body.get(bi).substring(li);
+		String text = body.get(bi).substring(0, li);
 		int tw = g.getFontMetrics().stringWidth(text);
 		g.fillRect(x + tw, y + bi*10, 3, 15);
 	}

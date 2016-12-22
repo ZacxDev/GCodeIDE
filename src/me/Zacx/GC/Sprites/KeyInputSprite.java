@@ -21,12 +21,15 @@ public abstract class KeyInputSprite extends Sprite {
 		if (key == KeyEvent.VK_ENTER) {
 			body.add("");
 			bi++;
+			li = 0;
 		} else if (key == KeyEvent.VK_UP) {
 			if (bi > 0)
 				bi--;
 		} else if (key == KeyEvent.VK_DOWN) {
-			if (bi < body.size())
+			if (bi < body.size()-1)
 				bi++;
+			if (li > body.get(bi).length())
+				li = body.get(bi).length();
 		} else if (key == KeyEvent.VK_LEFT) {
 			if (li > 0)
 				li--;
@@ -39,7 +42,7 @@ public abstract class KeyInputSprite extends Sprite {
 				li--;
 			}
 		} else {
-			body.set(bi, body.get(bi) + KeyEvent.getKeyText(key));
+			body.set(bi, body.get(bi).substring(0, li) + KeyEvent.getKeyText(key) + body.get(bi).substring(li, body.get(bi).length()));
 			li++;
 		}
 	}
