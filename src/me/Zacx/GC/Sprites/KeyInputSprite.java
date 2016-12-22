@@ -37,10 +37,13 @@ public abstract class KeyInputSprite extends Sprite {
 			if (li < body.get(bi).length())
 				li++;
 		} else if (key == KeyEvent.VK_BACK_SPACE) {
-			if (body.get(bi).length() > 0) {
-				body.set(bi, body.get(bi).substring(0, li) + body.get(bi).substring(li+1, body.get(bi).length()));
+			if (body.get(bi).length() > 0 && li > 0) {
+				body.set(bi, body.get(bi).substring(0, li-1) + body.get(bi).substring(li, body.get(bi).length()));
 				li--;
 			}
+		} else if (key == KeyEvent.VK_DELETE) {
+			if (body.get(bi).length() > 0 || li > 0)
+				body.set(bi, body.get(bi).substring(0, li) + body.get(bi).substring(li+1, body.get(bi).length()));
 		} else {
 			body.set(bi, body.get(bi).substring(0, li) + KeyEvent.getKeyText(key) + body.get(bi).substring(li, body.get(bi).length()));
 			li++;

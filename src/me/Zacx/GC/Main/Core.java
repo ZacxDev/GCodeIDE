@@ -19,6 +19,7 @@ import java.util.jar.JarFile;
 
 import me.Zacx.GC.Frame.Window;
 import me.Zacx.GC.Input.KeyHandle;
+import me.Zacx.GC.Sprites.BasicEmulator;
 import me.Zacx.GC.Sprites.CodePane;
 import me.Zacx.GC.Sprites.KeyInputSprite;
 import me.Zacx.GC.Sprites.Sprite;
@@ -37,7 +38,8 @@ public class Core extends Canvas implements Runnable {
 
 	private Random r;
 	private KeyHandle keyHandle;
-	private KeyInputSprite currentKeySprite;
+	public KeyInputSprite currentKeySprite;
+	private BasicEmulator bEm;
 
 	public File pfFolder = new File(System.getenv("ProgramFiles")
 			+ "/GCodeIDE/");
@@ -94,6 +96,7 @@ public class Core extends Canvas implements Runnable {
 		keyHandle = Access.keyHandle;
 		r = new Random();
 		currentKeySprite = new CodePane(50, 50);
+		bEm = new BasicEmulator(currentKeySprite.getWidth() + basew * 7, 50);
 
 		window = new Window(WIDTH, HEIGHT, "Game", this);
 		this.addKeyListener(keyHandle);
@@ -183,9 +186,7 @@ public class Core extends Canvas implements Runnable {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
-		for (int i = 0; i < CodePane.codepanes.size(); i++) {
-			CodePane.codepanes.get(i).render(g);
-		}
+		Sprite.renderAll(g);
 		
 		g.dispose();
 			} while (bs.contentsRestored());
