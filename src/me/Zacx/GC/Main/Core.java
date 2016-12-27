@@ -17,12 +17,14 @@ import java.util.Random;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import me.Zacx.GC.Error.GCError;
 import me.Zacx.GC.Frame.Window;
 import me.Zacx.GC.Input.KeyHandle;
 import me.Zacx.GC.Sprites.BasicEmulator;
 import me.Zacx.GC.Sprites.CodePane;
 import me.Zacx.GC.Sprites.KeyInputSprite;
 import me.Zacx.GC.Sprites.Sprite;
+import me.Zacx.GC.Translate.GFunc;
 
 public class Core extends Canvas implements Runnable {
 
@@ -39,7 +41,7 @@ public class Core extends Canvas implements Runnable {
 	private Random r;
 	private KeyHandle keyHandle;
 	public KeyInputSprite currentKeySprite;
-	private BasicEmulator bEm;
+	public BasicEmulator bEm;
 
 	public File pfFolder = new File(System.getenv("ProgramFiles")
 			+ "/GCodeIDE/");
@@ -98,7 +100,7 @@ public class Core extends Canvas implements Runnable {
 		currentKeySprite = new CodePane(50, 50);
 		bEm = new BasicEmulator(currentKeySprite.getWidth() + basew * 7, 50);
 
-		window = new Window(WIDTH, HEIGHT, "Game", this);
+		window = new Window(WIDTH, HEIGHT, "GCode IDE", this);
 		this.addKeyListener(keyHandle);
 		this.requestFocus();
 
@@ -165,6 +167,8 @@ public class Core extends Canvas implements Runnable {
 			updateFrame();
 			ufto = 60L;
 		}
+		
+		Sprite.tickAll();
 	}
 
 	private void render() {
@@ -187,6 +191,8 @@ public class Core extends Canvas implements Runnable {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
 		Sprite.renderAll(g);
+		GCError.renderAll(g);
+		GFunc.renderAll(g);
 		
 		g.dispose();
 			} while (bs.contentsRestored());
@@ -201,6 +207,7 @@ public class Core extends Canvas implements Runnable {
 		baseh = HEIGHT / 100;
 		
 		Sprite.validateAll();
+		GCError.validate();
 	}
 
 	public static void main(String[] args) {

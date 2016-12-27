@@ -28,6 +28,8 @@ public abstract class KeyInputSprite extends Sprite {
 		} else if (key == KeyEvent.VK_DOWN) {
 			if (bi < body.size()-1)
 				bi++;
+			else
+				li = body.get(bi).length();
 			if (li > body.get(bi).length())
 				li = body.get(bi).length();
 		} else if (key == KeyEvent.VK_LEFT) {
@@ -36,17 +38,31 @@ public abstract class KeyInputSprite extends Sprite {
 		} else if (key == KeyEvent.VK_RIGHT) {
 			if (li < body.get(bi).length())
 				li++;
+		} else if (key == KeyEvent.VK_SPACE) { 
+			body.set(bi, body.get(bi).substring(0, li) + " " + body.get(bi).substring(li, body.get(bi).length()));
+			li++;
+		} else if (key == KeyEvent.VK_MINUS) {
+			body.set(bi, body.get(bi).substring(0, li) + "-" + body.get(bi).substring(li, body.get(bi).length()));
+			li++;
 		} else if (key == KeyEvent.VK_BACK_SPACE) {
 			if (body.get(bi).length() > 0 && li > 0) {
 				body.set(bi, body.get(bi).substring(0, li-1) + body.get(bi).substring(li, body.get(bi).length()));
 				li--;
+			} else if (bi > 0) {
+				String lastLine = body.get(bi);
+				body.remove(bi);
+				bi--;
+				li = body.get(bi).length();
+				body.set(bi, body.get(bi) + lastLine);
 			}
 		} else if (key == KeyEvent.VK_DELETE) {
-			if (body.get(bi).length() > 0 || li > 0)
+			if ((body.get(bi).length() > 0 || li > 0) && li < body.get(bi).length())
 				body.set(bi, body.get(bi).substring(0, li) + body.get(bi).substring(li+1, body.get(bi).length()));
 		} else {
-			body.set(bi, body.get(bi).substring(0, li) + KeyEvent.getKeyText(key) + body.get(bi).substring(li, body.get(bi).length()));
-			li++;
+			if (KeyEvent.getKeyText(key).length() == 1) {
+				body.set(bi, body.get(bi).substring(0, li) + KeyEvent.getKeyText(key) + body.get(bi).substring(li, body.get(bi).length()));
+				li++;
+			}
 		}
 	}
 }

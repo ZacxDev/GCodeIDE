@@ -25,6 +25,13 @@ public abstract class Sprite {
 		}
 	}
 	
+	public void tick() {}
+	
+	public static void tickAll() {
+		for (int i = 0; i < sprites.size(); i++)
+			sprites.get(i).tick();
+	}
+	
 	public abstract void render(Graphics g);
 	
 	public static void renderAll(Graphics g) {
@@ -38,6 +45,13 @@ public abstract class Sprite {
 	}
 	public int getHeight() {
 		return height;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	public int getY() {
+		return y;
 	}
 	
 }
