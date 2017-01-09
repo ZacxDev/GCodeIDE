@@ -39,7 +39,7 @@ public class Core extends Canvas implements Runnable {
 	public static int basew = WIDTH / 100, baseh = HEIGHT / 100;
 
 	private Random r;
-	private KeyHandle keyHandle;
+	public KeyHandle keyHandle;
 	public KeyInputSprite currentKeySprite;
 	public BasicEmulator bEm;
 

@@ -1,20 +1,30 @@
 package me.Zacx.GC.Sprites;
 
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import me.Zacx.GC.Input.KeyHandle;
+import me.Zacx.GC.Main.Access;
 
 public abstract class KeyInputSprite extends Sprite {
 
 	protected List<String> body = new LinkedList<String>();
 	//line index, body index (of cursor)
 	protected int li, bi;
+	private KeyHandle keyHandle;
 	
 	public KeyInputSprite(int x, int y) {
 		super(x, y);
 		body.add("");
 		li = 0;
 		bi = 0;
+		keyHandle = Access.c.keyHandle;
 	}
 	
 	public void handleKeyInput(int key) {
@@ -58,6 +68,18 @@ public abstract class KeyInputSprite extends Sprite {
 		} else if (key == KeyEvent.VK_DELETE) {
 			if ((body.get(bi).length() > 0 || li > 0) && li < body.get(bi).length())
 				body.set(bi, body.get(bi).substring(0, li) + body.get(bi).substring(li+1, body.get(bi).length()));
+		}else if (key == KeyEvent.VK_V && keyHandle.ctrlDown) {
+			try {
+				String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+				body.set(bi, body.get(bi).substring(0, li) + data + body.get(bi).substring(li, body.get(bi).length()));
+				li += data.length();
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (UnsupportedFlavorException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			if (KeyEvent.getKeyText(key).length() == 1) {
 				body.set(bi, body.get(bi).substring(0, li) + KeyEvent.getKeyText(key) + body.get(bi).substring(li, body.get(bi).length()));

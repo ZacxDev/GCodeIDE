@@ -22,6 +22,7 @@ public class Window extends JFrame {
 		this.setResizable(true);
 		this.setLocationRelativeTo(null);
 		this.add(c);
+		this.setJMenuBar(new MenuBar(this).getJMenuBar());
 		this.setVisible(true);
 		
 		c.start();

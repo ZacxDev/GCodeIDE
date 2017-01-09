@@ -41,11 +41,11 @@ public class GFunc {
 			g.drawLine(lx, ly, emx + x, emy + y);
 		} else if (type == GCF.G01) {
 			g.setColor(Color.black);
-			g.drawLine(lx, ly, lx + x, ly + y);
+			g.drawLine(lx, ly, emx + x, emy + y);
 		} else if (type == GCF.G02) {
 			g.setColor(Color.green);
 			//g.drawArc(lx, ly, x, y, i, j);
-			g.drawArc(lx,ly,i,j,x,-y);
+			g.drawArc(lx,ly,i,j,x*i,y);
 		} else if (type == GCF.G03) {
 			g.setColor(Color.green);
 			g.drawArc(lx,ly,i,j,-x,y);
